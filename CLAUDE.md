@@ -5,7 +5,9 @@
 Read `AGENTS.md` and `SKILL.md` before starting any build.
 
 ## New pieces: ask style first
-Before doing **any** work on a new recipe card—before writing `prompts.json`, generating images, or copying a template—**STOP and ask the user which style they want first.** Even if the user already pasted a full recipe or gave a quick request (*"make me a vintage card for beef stew"*), that is the start of the conversation, not approval to pick a style for them.
+Before doing **any** work on a new recipe card—before writing `prompts.json`, generating images, or copying a template—**STOP and ask the user which style they want first**, **unless** they already explicitly specified the style (or explicitly requested **"both styles"**). Even if the user already pasted a full recipe or gave a quick request (*"make me a vintage card for beef stew"*), that is the start of the conversation, not approval to pick a style for them.
+
+If the user asks for **"both styles"** (or a multi-recipe batch in both styles), skip asking which main style and ask **one short confirmation** for any unspecified sub-choices (`editorial-ink` vs. `breezy-upa`/random for Style 2, default ink palette, and single-size vs. `1× / 2×` toggle)—then build one recipe-style card at a time.
 
 Offer the two project styles in plain, everyday terms (using multiple-choice buttons where your tool supports them, e.g. `AskUserQuestion` / `ask_question`):
 

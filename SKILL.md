@@ -11,11 +11,12 @@ Produces a full-color, double-sided US Letter recipe sheet in one of two selecta
 
 `SKILL_DIR` below refers to the folder containing this `SKILL.md`. Commands assume macOS with `python3` (`Pillow` and `pymupdf`) and Google Chrome installed.
 
-## Step 0: Ask for Style First (Mandatory)
+## Step 0: Ask for Style First (Mandatory Unless Already Specified)
 Before creating `prompts.json`, generating images, or copying a template for any new recipe card, **ask the user which style they want first** (see `CLAUDE.md` and `AGENTS.md`):
 - **Style 1 (`kodachrome-1960s`)** vs. **Style 2 (`midcentury-illustrated`)**
-- If Style 2, which **illustration flavor** (`editorial-ink` vs. `breezy-upa` minimalist UPA) and **ink palette** (`party-modern`, `chatelaine-green`, `festive-buffet`, or `notebook-sketch`)
-- Whether they want a **1× / 2× batch-size toggle** (and exact scaled cook times)
+- If Style 2, which **illustration flavor** (`editorial-ink` vs. `breezy-upa` sketchy minimalist) and **ink palette** (`party-modern`, `chatelaine-green`, `festive-buffet`, or `notebook-sketch`)
+- Whether they want a **1× / 2× batch-size toggle** (or fixed single size)
+- **Exception:** If the user explicitly asked for a specific style or **"both styles"** (e.g., `"generate recipe cards for these 5 recipes in both styles for each recipe"`), don't re-ask which main style—confirm only missing sub-choices (`editorial-ink` vs. `breezy-upa`, palette, single-size vs. toggle) in one brief check, then work **one recipe-style card at a time**.
 
 ## Reference Examples
 - `examples/sujuk-twice-baked-potatoes/` — Style 1 (`kodachrome-1960s`): 8 step photos + `"Make It Ahead"`, `4 Potatoes` / `8 Potatoes` toggle.
@@ -23,23 +24,28 @@ Before creating `prompts.json`, generating images, or copying a template for any
 
 ## Workflow
 1. **Confirm style & batch details** with the user (Step 0).
-2. **Stage in a scratch directory.** Copy the matching example folder (`examples/sujuk-twice-baked-potatoes/` or `examples/sujuk-potatoes-illustrated/`) into a scratch folder.
-3. **Update the recipe faithfully.** Keep every ingredient amount, temperature, and cooking time exact—for both the default batch size and the scaled toggle size. Never invent doubled bake/cook times.
-4. **Author `prompts.json`.** Keep the shared `"style"` block from your chosen style word-for-word so the whole card reads like one unified book, and write scene descriptions for `hero` (`3:4`) and `s1`–`sN` (`4:3`).
+2. **Scaffold a working dir with `new_recipe.py`:**
+   `python3 SKILL_DIR/scripts/new_recipe.py <slug> --style kodachrome-1960s|midcentury-illustrated [--breezy] [--palette ...] [--single-size]`
+   This creates `work/<slug>/<style>/` cleanly without modifying `examples/`.
+3. **Update the recipe faithfully.** Keep every ingredient amount (including metric `g`/`ml` and `°F`), temperature, and timing exact. For single-batch recipes (`--single-size`), keep `<body data-single-size="true">` and skip `data-big` attributes.
+4. **Author `prompts.json`.** Keep the shared `"style"` block (or `"style_variants"`) from your chosen style word-for-word, and write scene descriptions for `hero` (`3:4`) and `s1`–`sN` (`4:3`).
+   - Describe specialty gear and ingredients visually without brand-label text (e.g., *La Chamba* matte-black clay pot on a round metal stovetop diffuser, tabletop granite raclette stone with mini cheese-melting trays underneath, unlabeled glass mole jar).
 5. **Generate the `hero` test visual first**, inspect it visually, and confirm the style, framing, and absence of text/borders before generating `s1`–`sN`.
-6. **Generate the remaining step visuals** using one of the backends below.
+6. **Generate the remaining step visuals** one recipe-style card at a time, pacing `≥ 0.5–1 s` between requests.
 7. **Inspect every visual on a contact sheet:**
    `python3 SKILL_DIR/scripts/make_contact_sheet.py img contact_sheet.png`
    View `contact_sheet.png` and regenerate any shot with extra hands, garbled text, modern digital look, or baked-in white borders.
-8. **Adapt `template.html`:** Update title, kicker, meta, intro, ingredients (`data-big` / small defaults), glance strip, equipment footer, steps, hint boxes, and (for Style 2) `data-palette`.
+8. **Adapt `template.html` for the recipe's size and step count:**
+   - **22+ ingredients:** Add `dense` (`<div class="ing-box dense">` / `<div class="ing-panel dense">`) for clean 2-column ingredients.
+   - **4–6 steps:** Add `cols-2` (`<div class="steps cols-2">`) for larger step visuals with zero empty filler boxes.
+   - **7–8 steps:** Default 3-column `.steps` grid + 1–2 hint/note boxes.
+   - **9–12 steps:** Use `<div class="steps cols-4">` (fits up to 12 cells on Page 2) **or** expand to a **4-page spread** by adding extra `<section class="page">` blocks.
+   - **Multi-option / 12+ step recipes** (e.g., Option A & Option B methods): Use a **4-page spread** (Pages 2–3 for steps, Page 4 for alternate option + finish + notes) rather than cramming text below 7pt.
 9. **Build HTML, PDF(s), and previews:**
    `python3 SKILL_DIR/scripts/build.py template.html img OUT_BASE --preview-dir previews [--alt-hash small --alt-suffix -4-potatoes]`
-   *(Note: headless Chrome needs network access for Google Fonts and macOS permissions outside a restricted sandbox.)*
-10. **Verify every preview set** (`previews/page1.png`, `previews/page2.png`, and `previews-alt/` if built):
-    - Exactly **2 pages** per size.
-    - No `.glance` / `.stats-row` strip or hero caption colliding with the `.p1-foot` border.
-    - No Page-2 step caption colliding with `.p2-foot`.
-11. **Save final outputs to `~/Documents/Personal/Recipes/`** (or the user's chosen output directory) without overwriting existing files (`-v2`, `-v3`, etc.). Report saved file paths and image generation cost (zero per-image charge if using built-in subscription generation).
+   *(Cross-platform Chrome/Chromium auto-detected, or set `CHROME_BIN`; on macOS Chrome headless needs network access for Google Fonts.)*
+10. **Verify every preview set** (`previews/page1.png`, `previews/page2.png`, etc.) for zero clipped text or footer overlaps.
+11. **Save final outputs to `~/Documents/Personal/Recipes/`** (or the user's chosen output directory) without overwriting existing files (`-v2`, `-v3`, etc.). Report saved file paths and image generation cost (zero per-image charge for Gemini/Codex native tools).
 
 ## Image Backends (Strict Harness Rule)
 

@@ -161,7 +161,17 @@
   }
   .sizer button small { display: block; font-family: Oswald, sans-serif; font-size: 9px; letter-spacing: .12em; }
   .sizer button.on { background: var(--red); color: #fbeed2; }
+  body[data-single-size="true"] .sizer { display: none; }
   @media print { .sizer { display: none; } }
+
+  /* Optional layout helpers for recipes with 4-6 steps, 10+ steps, or 22+ ingredients */
+  .ing-box.dense ul { font-size: 7.5pt; line-height: 1.18; column-count: 2; column-gap: .16in; }
+  .ing-box.dense h3 { font-size: 11.5pt; margin: .03in 0 .01in; column-span: all; }
+  .steps.cols-2 { grid-template-columns: repeat(2, 1fr); gap: .2in .24in; }
+  .steps.cols-2 .step .photo { height: 2.15in; }
+  .steps.cols-4 { grid-template-columns: repeat(4, 1fr); gap: .12in .14in; }
+  .steps.cols-4 .step .photo { height: 1.18in; }
+  .steps.cols-4 .step p { font-size: 7.3pt; line-height: 1.24; }
 </style>
 </head>
 <body data-default="big">

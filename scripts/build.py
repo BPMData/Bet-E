@@ -14,24 +14,50 @@ Default crop is 0.04 per side to remove faded edges sometimes added by image gen
 """
 import argparse
 import base64
+import glob
 import io
 import os
 import re
+import shutil
 import subprocess
 import sys
 
 from PIL import Image
 import pymupdf
 
-CHROME = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
+
+def find_chrome() -> str:
+    candidates = [
+        os.environ.get("CHROME_BIN"),
+        "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+        "/Applications/Chromium.app/Contents/MacOS/Chromium",
+        shutil.which("google-chrome"),
+        shutil.which("google-chrome-stable"),
+        shutil.which("chromium"),
+        shutil.which("chromium-browser"),
+    ]
+    for path in candidates:
+        if path and os.path.exists(path):
+            return path
+    pw_hits = sorted(
+        glob.glob(os.path.expanduser("~/.cache/ms-playwright/chromium-*/chrome-*/chrome"))
+        + glob.glob(os.path.expanduser("~/Library/Caches/ms-playwright/chromium-*/chrome-*/Google Chrome for Testing.app/Contents/MacOS/Google Chrome for Testing"))
+    )
+    if pw_hits:
+        return pw_hits[-1]
+    sys.exit(
+        "Chrome/Chromium binary not found. Install Google Chrome or Chromium, "
+        "or set CHROME_BIN=/path/to/chrome."
+    )
 
 
-def render_pdf(html_url: str, pdf_path: str, preview_dir: str | None = None) -> int:
+def render_pdf(chrome: str, html_url: str, pdf_path: str, preview_dir: str | None = None) -> int:
     subprocess.run(
         [
-            CHROME,
+            chrome,
             "--headless=new",
             "--disable-gpu",
+            "--no-sandbox",
             "--no-pdf-header-footer",
             "--virtual-time-budget=8000",
             f"--print-to-pdf={os.path.abspath(pdf_path)}",
@@ -75,6 +101,11 @@ def main() -> None:
         if os.path.exists(p):
             sys.exit(f"refusing to overwrite {p}")
 
+    out_parent = os.path.dirname(os.path.abspath(html_out))
+    if out_parent:
+        os.makedirs(out_parent, exist_ok=True)
+
+    chrome = find_chrome()
     crops = {k: float(v) for k, v in (c.split("=") for c in a.crop)}
     html = open(a.template, encoding="utf-8").read()
 
@@ -93,11 +124,11 @@ def main() -> None:
         f.write(html)
 
     base_url = "file://" + os.path.abspath(html_out)
-    render_pdf(base_url, pdf_out, a.preview_dir)
+    render_pdf(chrome, base_url, pdf_out, a.preview_dir)
 
     if alt_pdf_out:
         alt_preview_dir = f"{a.preview_dir}-alt" if a.preview_dir else None
-        render_pdf(f"{base_url}#{a.alt_hash}", alt_pdf_out, alt_preview_dir)
+        render_pdf(chrome, f"{base_url}#{a.alt_hash}", alt_pdf_out, alt_preview_dir)
 
 
 if __name__ == "__main__":

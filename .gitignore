@@ -9,4 +9,5 @@ cost_log.txt
 *_old*.png
 .openrouter_key
 .env
+work/
 styles/*/refs/

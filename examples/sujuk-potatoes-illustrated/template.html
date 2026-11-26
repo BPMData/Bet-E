@@ -271,15 +271,27 @@
   }
   .controls button small { display: block; font-weight: 400; font-size: 9px; opacity: .8; }
   .controls button.on { background: var(--ink); color: var(--on-ink); }
+  body[data-single-size="true"] [data-size-group] { display: none; }
   @media print { .controls { display: none; } }
+
+  /* Optional layout helpers for recipes with 4-6 steps, 10+ steps, or 22+ ingredients */
+  .ing-panel.dense ul { font-size: 7.3pt; line-height: 1.18; column-count: 2; column-gap: .15in; }
+  .ing-panel.dense h3 { font-size: 7.6pt; margin: .04in 0 .02in; }
+  .steps.cols-2 { grid-template-columns: repeat(2, 1fr); gap: .18in .22in; }
+  .steps.cols-2 .step .art { height: 2.12in; }
+  .steps.cols-4 { grid-template-columns: repeat(4, 1fr); gap: .11in .13in; }
+  .steps.cols-4 .step .art { height: 1.15in; }
+  .steps.cols-4 .step p { font-size: 7pt; line-height: 1.22; }
 </style>
 </head>
 <body data-default="big" data-palette="party-modern">
 
 <div class="controls" role="group" aria-label="Recipe controls">
-  <div class="grp-title">Batch Size</div>
-  <button data-size="small" aria-pressed="false">4 Potatoes<small>8 halves · 4 boats</small></button>
-  <button data-size="big" aria-pressed="false">8 Potatoes<small>16 halves · 8 boats</small></button>
+  <div data-size-group>
+    <div class="grp-title">Batch Size</div>
+    <button data-size="small" aria-pressed="false">4 Potatoes<small>8 halves · 4 boats</small></button>
+    <button data-size="big" aria-pressed="false">8 Potatoes<small>16 halves · 8 boats</small></button>
+  </div>
   <div class="grp-title">Ink Palette</div>
   <button data-pal="party-modern" aria-pressed="false">Party Modern</button>
   <button data-pal="chatelaine-green" aria-pressed="false">Chatelaine Green</button>

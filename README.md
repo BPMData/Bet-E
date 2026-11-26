@@ -24,9 +24,10 @@ Bet-E/
 │   ├── kodachrome-1960s/                    # Style 1 spec
 │   └── midcentury-illustrated/              # Style 2 spec + refs/ moodboard images
 ├── scripts/
-│   ├── build.py                             # Crops borders, embeds base64, renders PDF(s) + previews
+│   ├── new_recipe.py                        # Scaffolds work/<slug>/<style>/ for a new recipe card
+│   ├── build.py                             # Crops borders, embeds base64, renders PDF(s) + previews (macOS/Linux)
 │   ├── make_contact_sheet.py                # Builds labeled grid contact sheet for QA inspection
-│   ├── print_prompts.py                     # Prints word-for-word prompts for native image tools (Gemini/Codex)
+│   ├── print_prompts.py                     # Prints word-for-word prompts (with random 2B/2C breezy flip)
 │   └── gen_images.py                        # Claude Code-only OpenRouter runner with pacing & cost logging
 └── examples/
     ├── sujuk-twice-baked-potatoes/          # Style 1 complete example (template, prompts, img/)
