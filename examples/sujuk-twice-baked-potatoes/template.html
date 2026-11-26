@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Three-Cheese, Roasted Garlic &amp; Crispy Sujuk Twice-Baked Potatoes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&family=Oswald:wght@500;600&family=Yellowtail&display=swap" rel="stylesheet">
+<style>
+  @page { size: letter; margin: 0; }
+  :root {
+    --paper: #f3e7cc;
+    --ink: #2b2118;
+    --red: #b5321f;
+    --mustard: #d49a1c;
+    --avocado: #6f7d2e;
+    --brown: #6b3a1e;
+  }
+  * { box-sizing: border-box; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  html, body { margin: 0; padding: 0; background: #8a8170; }
+  body { font-family: "Libre Caslon Text", Georgia, serif; color: var(--ink); }
+
+  .page {
+    width: 8.5in; height: 11in; margin: 0.4in auto; position: relative; overflow: hidden;
+    background:
+      radial-gradient(ellipse at 50% 40%, rgba(255,250,235,.55), rgba(0,0,0,0) 70%),
+      radial-gradient(ellipse at 100% 100%, rgba(150,100,40,.18), rgba(0,0,0,0) 45%),
+      radial-gradient(ellipse at 0% 0%, rgba(150,100,40,.12), rgba(0,0,0,0) 40%),
+      var(--paper);
+    padding: 0.42in 0.5in;
+    box-shadow: 0 4px 24px rgba(0,0,0,.35);
+  }
+  @media print {
+    html, body { background: none; }
+    .page { margin: 0; box-shadow: none; page-break-after: always; }
+    .page:last-child { page-break-after: auto; }
+  }
+
+  /* subtle halftone grain over everything */
+  .page::after {
+    content: ""; position: absolute; inset: 0; pointer-events: none;
+    background-image: radial-gradient(rgba(80,50,20,.07) 0.6px, transparent 0.7px);
+    background-size: 3px 3px; mix-blend-mode: multiply;
+  }
+
+  .photo { position: relative; overflow: hidden; border: 1px solid rgba(60,35,15,.5); }
+  .photo img { display: block; width: 100%; height: 100%; object-fit: cover;
+    filter: sepia(.16) saturate(1.08) contrast(.96) brightness(1.02); }
+
+  /* ---------- PAGE 1 ---------- */
+  .kicker {
+    display: flex; align-items: center; gap: .15in;
+    font-family: Oswald, sans-serif; letter-spacing: .22em; text-transform: uppercase;
+    font-size: 9pt; color: var(--red);
+  }
+  .kicker::before, .kicker::after { content: ""; flex: 1; height: 0; border-top: 2px solid var(--red); border-bottom: 1px solid var(--red); padding-top: 2px; }
+  h1 {
+    font-family: "Abril Fatface", Georgia, serif; font-weight: 400;
+    font-size: 35pt; line-height: .98; margin: .08in 0 0; text-align: center; color: var(--red);
+    letter-spacing: .005em;
+  }
+  h1 .script { display: block; font-family: Yellowtail, cursive; color: var(--brown); font-size: 26pt; margin-bottom: -.01in; }
+  .meta {
+    text-align: center; margin: .05in 0 .12in;
+    font-family: Oswald, sans-serif; text-transform: uppercase; letter-spacing: .16em; font-size: 8.8pt; color: var(--brown);
+  }
+  .meta span + span::before { content: "✦"; margin: 0 .12in; color: var(--mustard); }
+
+  .p1 { display: grid; grid-template-columns: 3.82in 1fr; gap: .26in; }
+  .hero-wrap { position: relative; }
+  .hero {
+    height: 5.15in; border: 6px solid #fffaf0; outline: 1px solid rgba(60,35,15,.45);
+    box-shadow: 2px 4px 0 rgba(60,35,15,.22); transform: rotate(-1deg); margin-top: .03in;
+  }
+  /* subtle vintage tape corners on hero frame */
+  .tape {
+    position: absolute; width: .68in; height: .18in; z-index: 2;
+    background: rgba(242,226,182,.72); border: 1px solid rgba(120,90,45,.22);
+    box-shadow: 0 1px 2px rgba(0,0,0,.1);
+  }
+  .tape.tl { top: -.03in; left: -.12in; transform: rotate(-28deg); }
+  .tape.br { bottom: 1.05in; right: -.1in; transform: rotate(-25deg); }
+  .hero-cap { font-style: italic; font-size: 8.4pt; line-height: 1.32; margin: .13in .05in 0; color: var(--brown); }
+
+  .intro { font-size: 9pt; line-height: 1.32; margin: 0 0 .11in; }
+  .intro::first-letter { font-family: "Abril Fatface", serif; float: left; font-size: 34pt; line-height: .8; padding: .03in .06in 0 0; color: var(--red); }
+
+  .ing-box { border: 2px solid var(--avocado); padding: .1in .14in .07in; background: rgba(255,250,235,.6); position: relative; }
+  .ing-box h2 {
+    font-family: Oswald, sans-serif; text-transform: uppercase; letter-spacing: .2em;
+    font-size: 9.8pt; margin: 0 0 .03in; color: #fff; background: var(--avocado);
+    display: inline-block; padding: .02in .11in; position: absolute; top: -.12in; left: .14in;
+  }
+  .ing-box h3 { font-family: Yellowtail, cursive; font-weight: 400; color: var(--red); font-size: 12.8pt; margin: .04in 0 .01in; }
+  .ing-box ul { list-style: none; margin: 0; padding: 0; font-size: 8.15pt; line-height: 1.24; }
+  .ing-box li { padding-left: .13in; text-indent: -.13in; margin-bottom: .005in; }
+  .ing-box li::before { content: "•"; color: var(--mustard); font-weight: 700; display: inline-block; width: .13in; text-indent: 0; }
+  .amt { font-weight: 700; }
+  .ing-box .note { font-style: italic; font-size: 7.7pt; color: var(--brown); }
+
+  .glance { margin-top: .1in; display: grid; grid-template-columns: repeat(3, 1fr); gap: .08in; text-align: center; }
+  .glance div { background: var(--mustard); color: #3a2208; padding: .045in .02in; border: 1px solid rgba(107,58,30,.22); }
+  .glance b { display: block; font-family: "Abril Fatface", serif; font-weight: 400; font-size: 15.5pt; line-height: 1.04; }
+  .glance small { font-family: Oswald, sans-serif; letter-spacing: .14em; text-transform: uppercase; font-size: 6.6pt; }
+
+  .p1-foot {
+    position: absolute; left: .5in; right: .5in; bottom: .34in;
+    border-top: 2px solid var(--red); padding-top: .07in;
+    display: grid; grid-template-columns: auto 1fr; gap: .16in; align-items: center;
+  }
+  .seal {
+    width: .92in; height: .92in; border-radius: 50%; background: var(--red); color: #fbeed2;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;
+    font-family: Oswald, sans-serif; text-transform: uppercase; letter-spacing: .08em; font-size: 6.5pt; line-height: 1.15;
+    border: 3px double #fbeed2; outline: 2px solid var(--red); transform: rotate(-8deg);
+  }
+  .seal b { font-family: "Abril Fatface", serif; font-weight: 400; font-size: 12.5pt; letter-spacing: 0; text-transform: none; }
+  .p1-foot p { margin: 0; font-size: 8.8pt; line-height: 1.38; }
+  .p1-foot p strong { font-family: Oswald, sans-serif; letter-spacing: .14em; text-transform: uppercase; color: var(--red); font-weight: 600; font-size: 8.4pt; }
+
+  /* ---------- PAGE 2 ---------- */
+  .p2-head { text-align: center; margin-bottom: .13in; }
+  .p2-head h2 { font-family: "Abril Fatface", serif; font-weight: 400; color: var(--red); font-size: 26pt; margin: .04in 0 0; line-height: 1; }
+  .p2-head h2 .script { font-family: Yellowtail, cursive; color: var(--brown); font-size: 21pt; margin-right: .2in; }
+  .p2-head p { margin: .05in 0 0; font-style: italic; font-size: 8.8pt; color: var(--brown); }
+
+  .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: .15in .19in; }
+  .step .photo { height: 1.52in; }
+  .step .num {
+    float: left; width: .35in; height: .35in; margin: .05in .08in 0 0; border-radius: 50%;
+    background: var(--red); color: #fbeed2; text-align: center;
+    font-family: "Abril Fatface", serif; font-size: 14.5pt; line-height: .35in;
+  }
+  .step h4 { font-family: Oswald, sans-serif; font-weight: 600; text-transform: uppercase; letter-spacing: .14em; color: var(--avocado); font-size: 8.8pt; margin: .06in 0 .02in; }
+  .step p { font-size: 8pt; line-height: 1.3; margin: 0; }
+  .step p b { color: var(--brown); }
+
+  .hint {
+    background: var(--avocado); color: #fbf3dc; padding: .14in .16in; position: relative;
+    display: flex; flex-direction: column; justify-content: center;
+    outline: 1px dashed rgba(255,227,154,.65); outline-offset: -6px;
+  }
+  .hint h4 { font-family: Yellowtail, cursive; font-weight: 400; font-size: 18.5pt; margin: 0 0 .05in; color: #ffe39a; line-height: 1; }
+  .hint p { font-size: 8.2pt; line-height: 1.36; margin: 0 0 .06in; }
+  .hint p:last-child { margin: 0; }
+
+  .p2-foot {
+    position: absolute; left: .5in; right: .5in; bottom: .36in; text-align: center;
+    font-family: Oswald, sans-serif; text-transform: uppercase; letter-spacing: .28em; font-size: 7.4pt; color: var(--brown);
+    border-top: 1px solid var(--brown); padding-top: .06in;
+  }
+
+  .sizer {
+    position: fixed; top: 14px; left: 14px; z-index: 10; background: var(--paper); border: 2px solid var(--red);
+    padding: 8px 10px 9px; box-shadow: 0 3px 12px rgba(0,0,0,.35); text-align: center;
+    font-family: Oswald, sans-serif; text-transform: uppercase; letter-spacing: .14em; font-size: 10px; color: var(--brown);
+  }
+  .sizer div { margin-bottom: 6px; }
+  .sizer button {
+    display: block; width: 100%; margin-top: 4px; cursor: pointer; border: 1.5px solid var(--red); background: #fffaf0; color: var(--red);
+    font-family: "Abril Fatface", serif; font-size: 14px; padding: 4px 10px; letter-spacing: 0;
+  }
+  .sizer button small { display: block; font-family: Oswald, sans-serif; font-size: 9px; letter-spacing: .12em; }
+  .sizer button.on { background: var(--red); color: #fbeed2; }
+  @media print { .sizer { display: none; } }
+</style>
+</head>
+<body data-default="big">
+<div class="sizer" role="group" aria-label="Recipe size">
+  <div>How Many Potatoes?</div>
+  <button data-size="small" aria-pressed="false">4 Potatoes<small>8 halves · 4 boats</small></button>
+  <button data-size="big" aria-pressed="false">8 Potatoes<small>16 halves · 8 boats</small></button>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const els = [...document.querySelectorAll('[data-big]')];
+  els.forEach(e => e.dataset.small = e.innerHTML);
+  const set = size => {
+    els.forEach(e => {
+      e.innerHTML = size === 'big' ? e.dataset.big : e.dataset.small;
+      if (e.dataset.bigClass) e.classList.toggle(e.dataset.bigClass, size === 'big');
+    });
+    document.querySelectorAll('.sizer button').forEach(b => {
+      const on = b.dataset.size === size; b.classList.toggle('on', on); b.setAttribute('aria-pressed', on);
+    });
+  };
+  const dflt = document.body.dataset.default || 'small';
+  document.querySelectorAll('.sizer button').forEach(b => b.onclick = () => { set(b.dataset.size); history.replaceState(null, '', b.dataset.size === dflt ? location.pathname : '#' + b.dataset.size); });
+  set(location.hash === '#big' ? 'big' : location.hash === '#small' ? 'small' : dflt);
+});
+</script>
+
+<!-- ================= PAGE ONE ================= -->
+<section class="page">
+  <div class="kicker">The Thanksgiving Table · Holiday Side Dish No. 4</div>
+  <h1><span class="script">Three-Cheese &amp; Roasted Garlic</span>Crispy Sujuk<br>Twice-Baked Potatoes</h1>
+  <div class="meta"><span><span data-big="Makes 16 Halves or 8 Boats">Makes 8 Halves or 4 Boats</span></span><span>400°F, Then 375°F</span><span><span data-big="About 1 Hr. 40 Min.">About 1 Hr. 20 Min.</span></span></div>
+
+  <div class="p1">
+    <div class="hero-wrap">
+      <div class="tape tl"></div>
+      <div class="photo hero"><img src="{{hero}}" alt="Twice-baked potatoes on a platter"></div>
+      <p class="hero-cap">Mounded high, bubbling with aged white cheddar, nutty Gruyère and Parmigiano, these spuds practically steal the show from the turkey! Crisp bits of spiced beef sujuk and bright sweet Hungarian paprika crown every forkful.</p>
+    </div>
+
+    <div>
+      <p class="intro">Twice-baked potatoes have always been a hostess's secret weapon: assemble them a day ahead, and they emerge from the Thanksgiving oven looking like a million dollars. Ours spare no luxury—sweet roasted garlic, nutty browned butter, velvety cream cheese, tangy sour cream, three cheeses and savory crisped sujuk.</p>
+
+      <div class="ing-box">
+        <h2>You Will Need</h2>
+        <h3>Sujuk, Potatoes &amp; Roasted Garlic</h3>
+        <ul>
+          <li><span class="amt" data-big="10–12 oz.">5–6 oz.</span> beef sujuk, casing removed. Grate <span class="amt" data-big="2 oz.">1 oz.</span> on a box grater for garnish; finely dice the rest (¼-in. cubes)</li>
+          <li><span class="amt" data-big="8">4</span> large russet potatoes (8–10 oz. each, similar size), scrubbed and dried</li>
+          <li><span class="amt" data-big="2 tbsp.">1 tbsp.</span> olive oil (or rendered sujuk fat), plus kosher salt, for skins</li>
+          <li><span class="amt" data-big="2 heads">1 head</span> garlic, plus <span class="amt" data-big="2 tsp.">1 tsp.</span> olive oil</li>
+        </ul>
+        <h3>Dairy &amp; Cheese</h3>
+        <ul>
+          <li><span class="amt" data-big="1 stick (8 tbsp.)">4 tbsp.</span> unsalted butter, browned</li>
+          <li><span class="amt" data-big="8 oz. (1 brick)">4 oz.</span> full-fat cream cheese, cubed and softened</li>
+          <li><span class="amt" data-big="1 cup">½ cup</span> full-fat sour cream, room temperature</li>
+          <li><span class="amt" data-big="¼ cup">2 tbsp.</span> heavy cream, warmed, plus up to <span class="amt" data-big="¼ cup">2 tbsp.</span> more <span class="note">(only if needed)</span></li>
+          <li><span class="amt" data-big="1½ cups">¾ cup</span> sharp white cheddar, freshly grated <span class="note">(<span data-big="1 cup">½ cup</span> in, <span data-big="½ cup">¼ cup</span> on top)</span></li>
+          <li><span class="amt" data-big="1½ cups">¾ cup</span> Gruyère, freshly grated <span class="note">(<span data-big="1 cup">½ cup</span> in, <span data-big="½ cup">¼ cup</span> on top)</span></li>
+          <li><span class="amt" data-big="½ cup">¼ cup</span> Parmigiano-Reggiano, finely grated <span class="note">(<span data-big="¼ cup">2 tbsp.</span> in, <span data-big="¼ cup">2 tbsp.</span> on top)</span></li>
+        </ul>
+        <h3>Herbs &amp; Seasoning</h3>
+        <ul>
+          <li><span class="amt" data-big="⅔ cup">⅓ cup</span> fresh chives, finely sliced, plus extra for garnish</li>
+          <li><span class="amt" data-big="2 tsp.">1 tsp.</span> fresh thyme leaves, finely chopped <span class="note">(optional)</span></li>
+          <li><span class="amt" data-big="½ tsp.">¼ tsp.</span> kosher salt to start, then adjust to taste</li>
+          <li><span class="amt" data-big="1 tsp.">½ tsp.</span> black pepper &nbsp;·&nbsp; <span class="amt" data-big="2 pinches">a pinch</span> grated nutmeg</li>
+          <li><span class="amt" data-big="½ tsp.">¼ tsp.</span> sweet (Hungarian) paprika, for dusting</li>
+        </ul>
+      </div>
+
+      <div class="glance">
+        <div><b>400°F</b><small>First Bake</small></div>
+        <div><b>375°F</b><small>Second Bake</small></div>
+        <div><b><span data-big="16">8</span></b><small>Loaded Halves</small></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="p1-foot">
+    <div class="seal"><span>Kitchen</span><b>Tested</b><span>&amp; Approved</span></div>
+    <p><strong>Equipment:</strong> cast-iron skillet, <span data-big="2 parchment-lined sheet pans">parchment-lined sheet pan</span>, foil, box grater, small saucepan, food mill (medium plate), large mixing bowl and a rubber spatula. Turn the page for our step-by-step picture method&nbsp;→</p>
+  </div>
+</section>
+
+<!-- ================= PAGE TWO ================= -->
+<section class="page">
+  <div class="p2-head">
+    <div class="kicker">Picture-Perfect Method</div>
+    <h2><span class="script">See how easy it is!</span> Step by Step</h2>
+    <p>Follow each photograph closely, and your Thanksgiving side dish will look straight out of the test kitchen.</p>
+  </div>
+
+  <div class="steps">
+    <div class="step">
+      <div class="photo"><img src="{{s1}}" alt="Crisping sujuk in skillet"></div>
+      <span class="num">1</span><h4>Crisp the Sujuk</h4>
+      <p>Cook <b>diced</b> sujuk in a <b>cold, dry skillet</b> over medium-low heat, stirring often, <b><span data-big="8–10 min. (two batches if crowded)">4–6 min.</span></b> until crisp. Drain on paper towels; save <span data-big="2 tbsp.">1 tbsp.</span> fat for skins. Keep <b>grated</b> sujuk raw and chilled.</p>
+    </div>
+    <div class="step">
+      <div class="photo"><img src="{{s2}}" alt="Prepping potatoes and garlic"></div>
+      <span class="num">2</span><h4>Roast &amp; First Bake</h4>
+      <p>Heat oven to <b>400°F</b>. Slice tops off garlic, oil and wrap in foil. Prick unwrapped potatoes 6–8 times; rub with oil or sujuk fat and salt well. Bake together on middle rack (foil pan below) <b><span data-big="60–70">50–60</span> min.</b> Cool 10–15 min.; lower oven to <b>375°F</b>.</p>
+    </div>
+    <div class="step">
+      <div class="photo"><img src="{{s3}}" alt="Browning butter and grating cheese"></div>
+      <span class="num">3</span><h4>Butter &amp; Cheese</h4>
+      <p><b>Grate all three cheeses from the block and set aside</b>—bagged cheese won't melt smoothly. <b>Separately</b>, melt butter in a small saucepan over medium heat until foamy, nutty and flecked with golden specks (<b>3–4 min.</b>). Pour butter into a bowl at once.</p>
+    </div>
+    <div class="step">
+      <div class="photo"><img src="{{s4}}" alt="Scooping potato shells"></div>
+      <span class="num">4</span><h4>Scoop the Shells</h4>
+      <p>Halve potatoes lengthwise (<span data-big="16 halves">8 halves</span>), or slice off the top third (<span data-big="8 boats">4 boats</span>). Scoop the steaming flesh into a large bowl, <b>leaving ¼-inch walls</b> so shells hold their shape. Set shells on parchment-lined sheet pans.</p>
+    </div>
+    <div class="step">
+      <div class="photo"><img src="{{s5}}" alt="Cranking potatoes through food mill"></div>
+      <span class="num">5</span><h4>Food Mill</h4>
+      <p><b>While the potato is still hot</b>, crank it with the squeezed-out roasted garlic through the food mill's <b>medium plate</b> in <b><span data-big="3–4 batches">2 batches</span></b>. Turn forward, then a quarter-turn back to clear; scrape the underside now and then.</p>
+    </div>
+    <div class="step">
+      <div class="photo"><img src="{{s6}}" alt="Mixing the potato filling"></div>
+      <span class="num">6</span><h4>Mix the Filling</h4>
+      <p>With a spatula, stir in browned butter and cream cheese, then sour cream and <span data-big="¼ cup">2 tbsp.</span> warm cream (add more by the tbsp. only if needed). <b>No mixer!</b> Fold in filling cheeses, crispy diced sujuk, chives, thyme, salt, pepper and nutmeg. Taste first.</p>
+    </div>
+    <div class="step">
+      <div class="photo"><img src="{{s7}}" alt="Mounding filling and topping with cheese"></div>
+      <span class="num">7</span><h4>Stuff &amp; Bake</h4>
+      <p>Mound filling high and rough up peaks with a fork. Sprinkle with topping cheeses. Bake uncovered at <b>375°F</b> for <b><span data-big="25–30 min.">20–25 min.</span></b><span data-big=", rotating pans halfway,"></span> until golden and bubbling. Broil 1–2 min. for deeper color; watch closely.</p>
+    </div>
+    <div class="step">
+      <div class="photo"><img src="{{s8}}" alt="Dusting paprika and garnishing"></div>
+      <span class="num">8</span><h4>Garnish &amp; Serve</h4>
+      <p>While baking, crisp <b>grated</b> sujuk in a dry skillet <b>1–2 min.</b>; drain. Out of the oven, <b>dust tops lightly with sweet paprika</b> through a sieve or from up high so it stays bright red. Scatter crispy sujuk and extra chives; serve piping hot.</p>
+    </div>
+    <div class="hint">
+      <h4>Make It Ahead</h4>
+      <p><b>1–2 days ahead:</b> Finish through the cheese topping in Step 7, don't bake. Cool, cover loosely and chill; keep grated garnish sujuk raw and separate.</p>
+      <p><b>Thanksgiving Day:</b> Stand 30–45 min., then bake uncovered at <b>375°F</b> for <b><span data-big="40–45">30–40</span> min.</b> until 165°F inside. Fry garnish sujuk, dust paprika and serve!</p>
+    </div>
+  </div>
+
+  <div class="p2-foot">✦ &nbsp; Happy Thanksgiving from Our Kitchen to Yours &nbsp; ✦</div>
+</section>
+
+</body>
+</html>

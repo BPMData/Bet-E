@@ -1,0 +1,12 @@
+.DS_Store
+__pycache__/
+*.pyc
+*.bak
+dist/
+output/
+previews*/
+cost_log.txt
+*_old*.png
+.openrouter_key
+.env
+styles/*/refs/
