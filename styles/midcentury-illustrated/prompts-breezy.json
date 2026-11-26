@@ -1,5 +1,15 @@
 {
   "style": "Hastily sketched 1950s mid-century modern editorial spot illustration, in the lively, witty ink-and-spot-color spirit of 1950s Party Cookbook (Cocktails for a Few), Kiddie Cocktails, and Jim Flora / Ronald Searle / vintage New Yorker pen drawings. Energetic, loose, uneven hand-drawn black fountain-pen ink lines with variable nib thickness, quick squiggles, and imperfect sketchy contours, paired with 2 or 3 loose, dry-textured flat screenprint/gouache color shapes (vermilion coral-red, warm ochre mustard, olive-chartreuse) that playfully slip slightly outside the ink lines (off-register 1950s print look) on generous open warm cream paper. Strictly NO clean vector art, NO uniform SVG outlines, NO symmetrical clipart, NO smooth digital shapes, NO photorealism, NO 3D, NO gradients. Full-bleed edge-to-edge on warm cream paper: no book pages, no borders, no captions, no words, no text, no signatures anywhere. ",
+  "style_variants": [
+    {
+      "name": "2B-loose-hand-inked",
+      "prompt": "Charming 1950s mid-century modern hand-drawn ink and flat screenprint spot illustration, in the breezy, witty editorial spirit of 1950s Party Cookbook, Festive Buffet Cookery, and Saul Bass / Jim Flora / vintage New Yorker spot drawings. Loose, expressive, slightly wobbly hand-drawn black fountain-pen ink outlines paired with 2 or 3 slightly off-register flat matte gouache/screenprint color blocks (vermilion coral-red, warm ochre mustard, olive-chartreuse) on generous open warm cream paper (50% open cream breathing room). Playful, organic mid-century asymmetry—NOT stiff modern flat vector graphics, NOT symmetrical clipart, NO crosshatching, NO shading gradients, NO photorealism, NOT 3D. Full-bleed edge-to-edge on warm cream paper: no book pages, no borders, no captions, no text, no signatures anywhere. "
+    },
+    {
+      "name": "2C-hastily-sketched",
+      "prompt": "Hastily sketched 1950s mid-century modern editorial spot illustration, in the lively, witty ink-and-spot-color spirit of 1950s Party Cookbook (Cocktails for a Few), Kiddie Cocktails, and Jim Flora / Ronald Searle / vintage New Yorker pen drawings. Energetic, loose, uneven hand-drawn black fountain-pen ink lines with variable nib thickness, quick squiggles, and imperfect sketchy contours, paired with 2 or 3 loose, dry-textured flat screenprint/gouache color shapes (vermilion coral-red, warm ochre mustard, olive-chartreuse) that playfully slip slightly outside the ink lines (off-register 1950s print look) on generous open warm cream paper. Strictly NO clean vector art, NO uniform SVG outlines, NO symmetrical clipart, NO smooth digital shapes, NO photorealism, NO 3D, NO gradients. Full-bleed edge-to-edge on warm cream paper: no book pages, no borders, no captions, no words, no text, no signatures anywhere. "
+    }
+  ],
   "aspect": {
     "hero": "3:4",
     "default": "4:3"

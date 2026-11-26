@@ -5,8 +5,11 @@ Inspired by 1950s–early 1960s illustrated cookbooks (*Party Cookbook* by Jim B
 ## Two Illustration Flavors (Sub-Styles)
 1. **`editorial-ink` (Gouache & Crosshatch — `examples/sujuk-potatoes-illustrated/prompts.json`)**
    - *The Fireside Cook Book* / *Party Cookbook* richness: expressive hand-drawn black ink linework with lively crosshatching over flat gouache/screenprint color blocks (`sample-hero.jpg`).
-2. **`breezy-upa` (Minimalist UPA / Screenprint — `styles/midcentury-illustrated/prompts-breezy.json`)**
-   - *Festive Buffet Cookery* / *Chatelaine 401* / 1950s UPA animation breeziness: ultra-simple iconic geometric silhouettes, single-stroke contours (or lineless flat cutouts), 40–50% open cream breathing room, strictly 2–3 flat spot colors + black, **zero crosshatching and zero fussy detail** (`sample-hero-breezy.jpg`).
+2. **`breezy-upa` (Minimalist Sketch & Screenprint — `styles/midcentury-illustrated/prompts-breezy.json`)**
+   - *Party Cookbook (Cocktails for a Few)* / *Kiddie Cocktails* / *Festive Buffet Cookery* breeziness: generous open cream breathing room, zero crosshatching, strictly 2–3 flat spot colors + black, and **no stiff SVG-clipart symmetry**.
+   - `prompts-breezy.json` includes **two `style_variants`** that `print_prompts.py` and `gen_images.py` flip between at random by default (or lock with `--style-variant 0|1`):
+     - **`2B-loose-hand-inked`** (`sample-hero-breezy-2b.jpg`): loose, slightly wobbly fountain-pen contours with off-register flat screenprint color blocks.
+     - **`2C-hastily-sketched`** (`sample-hero-breezy.jpg`): energetic, hastily sketched variable-nib ink lines with dry-textured spot colors slipping playfully outside the lines.
 
 ## Visual Signature
 - **Typography:** Expressive editorial serif display titles with **oversized colored initial capitals** (like *Party Cookbook*'s large vermilion `P` and `C`), clean block-printed uppercase kickers/headers, and crisp book serif or typewriter bylines.

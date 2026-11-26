@@ -5,8 +5,11 @@ IMPORTANT: This script is intended ONLY for Claude Code (which lacks a native im
 Gemini / Antigravity and Codex must use their built-in native image tools instead and must
 NEVER invoke this script or spend the user's OpenRouter credits.
 
+Supports optional `style_variants` in prompts.json, flipping between variants at random
+per recipe run (or per image with `--style-variant mix`).
+
 Usage:
-  gen_images.py prompts.json OUT_DIR [--delay 1.0] [name ...]
+  gen_images.py prompts.json OUT_DIR [--delay 1.0] [--style-variant random|mix|0|1...] [name ...]
 
 Env:
   MODEL (default google/gemini-3-pro-image)
@@ -17,6 +20,7 @@ import argparse
 import base64
 import json
 import os
+import random
 import time
 import urllib.request
 
@@ -31,11 +35,24 @@ def load_key() -> str:
         return f.read().strip()
 
 
-def generate_one(key: str, cfg: dict, aspect: dict, out: str, name: str) -> tuple[str, float, str]:
+def pick_style(cfg: dict, variant_arg: str) -> tuple[str, str | None]:
+    variants = cfg.get("style_variants")
+    if not variants:
+        return cfg["style"], None
+    if variant_arg in ("random", "mix"):
+        chosen = random.choice(variants)
+    else:
+        chosen = variants[int(variant_arg)]
+    if isinstance(chosen, dict):
+        return chosen["prompt"], chosen.get("name")
+    return str(chosen), None
+
+
+def generate_one(key: str, style: str, cfg: dict, aspect: dict, out: str, name: str) -> tuple[str, float, str]:
     body = {
         "model": MODEL,
         "modalities": ["image", "text"],
-        "messages": [{"role": "user", "content": cfg["style"] + cfg["prompts"][name]}],
+        "messages": [{"role": "user", "content": style + cfg["prompts"][name]}],
         "image_config": {"aspect_ratio": aspect.get(name, aspect.get("default", "4:3"))},
     }
     req = urllib.request.Request(
@@ -69,6 +86,11 @@ def main() -> None:
         default=float(os.environ.get("IMAGE_DELAY", "1.0")),
         help="Seconds to wait after each image request (default: 1.0, recommended >= 0.5)",
     )
+    ap.add_argument(
+        "--style-variant",
+        default="random",
+        help="Variant selection when prompts.json has style_variants: random (default), mix (per-image), or 0-based index",
+    )
     ap.add_argument("names", nargs="*", help="Optional subset of prompt names (e.g. hero s1)")
     args = ap.parse_args()
 
@@ -79,9 +101,16 @@ def main() -> None:
     aspect = cfg.get("aspect", {})
     delay = max(0.5, args.delay)
 
+    fixed_style, fixed_name = (None, None)
+    if args.style_variant != "mix":
+        fixed_style, fixed_name = pick_style(cfg, args.style_variant)
+        if fixed_name:
+            print(f"style variant: {fixed_name}")
+
     total = 0.0
     for idx, name in enumerate(names):
-        n, c, s = generate_one(key, cfg, aspect, args.out_dir, name)
+        style = pick_style(cfg, "mix")[0] if args.style_variant == "mix" else fixed_style
+        n, c, s = generate_one(key, style, cfg, aspect, args.out_dir, name)
         total += c
         print(f"{n}: {s} ${c:.3f}")
         if idx < len(names) - 1:
