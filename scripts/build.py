@@ -35,19 +35,27 @@ def find_chrome() -> str:
         shutil.which("google-chrome-stable"),
         shutil.which("chromium"),
         shutil.which("chromium-browser"),
+        shutil.which("chrome"),
+        shutil.which("msedge"),
     ]
+    if os.name == "nt":
+        for root in (os.environ.get("ProgramFiles"), os.environ.get("ProgramFiles(x86)"), os.environ.get("LocalAppData")):
+            if root:
+                candidates.append(os.path.join(root, "Google", "Chrome", "Application", "chrome.exe"))
+                candidates.append(os.path.join(root, "Microsoft", "Edge", "Application", "msedge.exe"))
     for path in candidates:
         if path and os.path.exists(path):
             return path
     pw_hits = sorted(
         glob.glob(os.path.expanduser("~/.cache/ms-playwright/chromium-*/chrome-*/chrome"))
         + glob.glob(os.path.expanduser("~/Library/Caches/ms-playwright/chromium-*/chrome-*/Google Chrome for Testing.app/Contents/MacOS/Google Chrome for Testing"))
+        + glob.glob(os.path.expanduser("~/AppData/Local/ms-playwright/chromium-*/chrome-win*/chrome.exe"))
     )
     if pw_hits:
         return pw_hits[-1]
     sys.exit(
-        "Chrome/Chromium binary not found. Install Google Chrome or Chromium, "
-        "or set CHROME_BIN=/path/to/chrome."
+        "Chrome/Chromium/Edge binary not found. Install Google Chrome or Microsoft Edge, "
+        "or set CHROME_BIN=/path/to/browser."
     )
 
 
@@ -110,7 +118,16 @@ def main() -> None:
     html = open(a.template, encoding="utf-8").read()
 
     for name in sorted(set(re.findall(r"\{\{(\w+)\}\}", html))):
-        img_path = os.path.join(a.img_dir, f"{name}.png")
+        img_path = next(
+            (
+                os.path.join(a.img_dir, f"{name}{ext}")
+                for ext in (".png", ".jpg", ".jpeg", ".webp")
+                if os.path.exists(os.path.join(a.img_dir, f"{name}{ext}"))
+            ),
+            None,
+        )
+        if not img_path:
+            sys.exit(f"missing image for {{{{{name}}}}} in {a.img_dir} (.png/.jpg/.jpeg/.webp)")
         im = Image.open(img_path).convert("RGB")
         w, h = im.size
         c = crops.get(name, 0.04)

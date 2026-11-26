@@ -33,16 +33,32 @@ def main() -> None:
     ap.add_argument("names", nargs="*", help="Optional subset of image stems (e.g. hero s1 s2)")
     a = ap.parse_args()
 
+    exts = (".png", ".jpg", ".jpeg", ".webp")
     if a.names:
-        files = [f"{n}.png" for n in a.names]
+        files = []
+        for n in a.names:
+            hit = next((f"{n}{ext}" for ext in exts if os.path.exists(os.path.join(a.img_dir, f"{n}{ext}"))), None)
+            if not hit:
+                sys.exit(f"missing image for {n} in {a.img_dir}")
+            files.append(hit)
     else:
-        files = sorted(
-            (f for f in os.listdir(a.img_dir) if f.endswith(".png") and "_old" not in f),
-            key=sort_key,
+        seen_stems: set[str] = set()
+        candidates = sorted(
+            (
+                f for f in os.listdir(a.img_dir)
+                if os.path.splitext(f)[1].lower() in exts and "_old" not in f
+            ),
+            key=lambda f: (sort_key(f), exts.index(os.path.splitext(f)[1].lower())),
         )
+        files = []
+        for f in candidates:
+            stem = os.path.splitext(f)[0]
+            if stem not in seen_stems:
+                seen_stems.add(stem)
+                files.append(f)
 
     if not files:
-        sys.exit(f"no .png files found in {a.img_dir}")
+        sys.exit(f"no image files found in {a.img_dir}")
 
     rows = math.ceil(len(files) / a.cols)
     sheet = Image.new("RGB", (a.cols * a.tile_w, rows * a.tile_h), (240, 236, 226))

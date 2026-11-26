@@ -1,0 +1,58 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  cli-and-build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install Python dependencies
+        run: python3 -m pip install --upgrade pip pillow pymupdf
+
+      - name: Verify Chrome or Chromium
+        run: |
+          if command -v google-chrome >/dev/null 2>&1; then
+            google-chrome --version
+          else
+            sudo apt-get update
+            sudo apt-get install -y chromium-browser
+          fi
+
+      - name: Run CLI test suite
+        run: python3 -m unittest discover -s tests -v
+
+      - name: Smoke-build example card and merge cookbook with real Chrome
+        run: |
+          python3 scripts/ensure_env.py
+          python3 scripts/make_contact_sheet.py examples/sujuk-twice-baked-potatoes/img /tmp/ci-contact.png
+          python3 scripts/build.py \
+            examples/sujuk-twice-baked-potatoes/template.html \
+            examples/sujuk-twice-baked-potatoes/img \
+            /tmp/ci-potatoes \
+            --preview-dir /tmp/ci-previews \
+            --alt-hash small \
+            --alt-suffix -4-potatoes
+          test -f /tmp/ci-potatoes.pdf
+          test -f /tmp/ci-potatoes-4-potatoes.pdf
+          test -f /tmp/ci-previews/page1.png
+          python3 scripts/merge_cookbook.py \
+            /tmp/ci-cookbook.pdf \
+            /tmp/ci-potatoes.pdf \
+            /tmp/ci-potatoes-4-potatoes.pdf \
+            --style kodachrome \
+            --title "CI Test Cookbook" \
+            --preview-dir /tmp/ci-toc-previews
+          test -f /tmp/ci-cookbook.pdf
+          test -f /tmp/ci-toc-previews/page1.png

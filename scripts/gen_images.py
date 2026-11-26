@@ -48,11 +48,11 @@ def pick_style(cfg: dict, variant_arg: str) -> tuple[str, str | None]:
     return str(chosen), None
 
 
-def generate_one(key: str, style: str, cfg: dict, aspect: dict, out: str, name: str) -> tuple[str, float, str]:
+def generate_one(key: str, style: str, cfg: dict, aspect: dict, out: str, name: str, callout_suffix: str = "") -> tuple[str, float, str]:
     body = {
         "model": MODEL,
         "modalities": ["image", "text"],
-        "messages": [{"role": "user", "content": style + cfg["prompts"][name]}],
+        "messages": [{"role": "user", "content": style + cfg["prompts"][name] + callout_suffix}],
         "image_config": {"aspect_ratio": aspect.get(name, aspect.get("default", "4:3"))},
     }
     req = urllib.request.Request(
@@ -91,6 +91,11 @@ def main() -> None:
         default="random",
         help="Variant selection when prompts.json has style_variants: random (default), mix (per-image), or 0-based index",
     )
+    ap.add_argument(
+        "--callouts",
+        action="store_true",
+        help="Opt in to playful 1950s hand-lettered comic callout labels (e.g. 'SIZZLE!', 'CHEESE PULL!')",
+    )
     ap.add_argument("names", nargs="*", help="Optional subset of prompt names (e.g. hero s1)")
     args = ap.parse_args()
 
@@ -100,6 +105,12 @@ def main() -> None:
     names = args.names or list(cfg["prompts"])
     aspect = cfg.get("aspect", {})
     delay = max(0.5, args.delay)
+    callout_suffix = (
+        " Optionally include 1–2 witty, cleanly spelled 1950s hand-lettered editorial ink callouts "
+        "(such as 'SIZZLE!' or an ingredient pointer) in the margin."
+        if args.callouts
+        else ""
+    )
 
     fixed_style, fixed_name = (None, None)
     if args.style_variant != "mix":
@@ -110,7 +121,7 @@ def main() -> None:
     total = 0.0
     for idx, name in enumerate(names):
         style = pick_style(cfg, "mix")[0] if args.style_variant == "mix" else fixed_style
-        n, c, s = generate_one(key, style, cfg, aspect, args.out_dir, name)
+        n, c, s = generate_one(key, style, cfg, aspect, args.out_dir, name, callout_suffix)
         total += c
         print(f"{n}: {s} ${c:.3f}")
         if idx < len(names) - 1:
