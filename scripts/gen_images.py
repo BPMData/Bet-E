@@ -1,6 +1,10 @@
 #!/usr/bin/env python3
 """Generate vintage cookbook visuals via OpenRouter, paced to avoid rate-limit bursts.
 
+IMPORTANT: This script is intended ONLY for Claude Code (which lacks a native image generator).
+Gemini / Antigravity and Codex must use their built-in native image tools instead and must
+NEVER invoke this script or spend the user's OpenRouter credits.
+
 Usage:
   gen_images.py prompts.json OUT_DIR [--delay 1.0] [name ...]
 

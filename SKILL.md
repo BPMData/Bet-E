@@ -41,17 +41,18 @@ Before creating `prompts.json`, generating images, or copying a template for any
     - No Page-2 step caption colliding with `.p2-foot`.
 11. **Save final outputs to `~/Documents/Personal/Recipes/`** (or the user's chosen output directory) without overwriting existing files (`-v2`, `-v3`, etc.). Report saved file paths and image generation cost (zero per-image charge if using built-in subscription generation).
 
-## Image Backends
+## Image Backends (Strict Harness Rule)
 
-### A. Built-In Agent Image Generator (`image-generator` subagent)
-Preferred when available (typically included in the user's Gemini subscription with no per-image charge):
+### A. Built-In Native Image Generation (Mandatory for Gemini / Antigravity and Codex)
+**Gemini / Antigravity and Codex MUST use their native built-in image generation tool ONLY (`image-generator` / native image tool) and MUST NEVER invoke `scripts/gen_images.py` or use the user's OpenRouter key—not even as a fallback.**
 1. Print exact word-for-word prompts:
    `python3 SKILL_DIR/scripts/print_prompts.py prompts.json`
-2. Invoke `image-generator` for `hero` first (`3:4` portrait) and inspect it. Then generate `s1`–`sN` (`4:3` landscape) **with at least a 0.5–1 second wait between image generation requests** (sequentially or in small staggered pairs—never fire 8–9 requests simultaneously in one unthrottled burst, or the image endpoint will hit `429` rate limits).
-   - If a call still hits a transient `429` / burst rate limit, wait at least 1 second and retry only the failed image(s) via `send_message` rather than switching backends.
+2. Invoke `image-generator` (or your native image tool) for `hero` first (`3:4` portrait) and inspect it. Then generate `s1`–`sN` (`4:3` landscape) **with at least a 0.5–1 second wait between image generation requests** (sequentially or in small staggered pairs—never fire 8–9 requests simultaneously in one unthrottled burst, or the image endpoint will hit `429` rate limits).
+   - If a call still hits a transient `429` / burst rate limit, wait at least 1 second and retry only the failed image(s) via `send_message`—never switch to OpenRouter.
 3. Because the built-in image tool writes `.jpg` files into the agent's artifact directory (`<name>_<timestamp>.jpg`), copy the **exact chosen filename** (avoid blind globs if a prompt was retried) to `img/<name>.png` in your scratch working directory. Pillow handles JPEG bytes inside `.png` seamlessly.
 
-### B. OpenRouter Fallback (Pay-Per-Image)
+### B. OpenRouter (`scripts/gen_images.py`) — Claude Code ONLY
+**Only Claude Code** (which has no native image generation tool) should run `scripts/gen_images.py`. Gemini/Antigravity and Codex must never run this script.
 `python3 SKILL_DIR/scripts/gen_images.py prompts.json img hero`
 Then run without names for the rest, or with specific names to redo individual shots.
 - Default model `google/gemini-3-pro-image` (override via `MODEL=`) reads `OPENROUTER_API_KEY` from the environment or `OPENROUTER_KEY_FILE` (default `~/.openrouter_key`). Never print or log the API key.

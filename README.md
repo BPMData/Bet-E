@@ -26,8 +26,8 @@ Bet-E/
 ├── scripts/
 │   ├── build.py                             # Crops borders, embeds base64, renders PDF(s) + previews
 │   ├── make_contact_sheet.py                # Builds labeled grid contact sheet for QA inspection
-│   ├── print_prompts.py                     # Prints word-for-word prompts for built-in image tools
-│   └── gen_images.py                        # Optional OpenRouter runner with cost logging
+│   ├── print_prompts.py                     # Prints word-for-word prompts for native image tools (Gemini/Codex)
+│   └── gen_images.py                        # Claude Code-only OpenRouter runner with pacing & cost logging
 └── examples/
     ├── sujuk-twice-baked-potatoes/          # Style 1 complete example (template, prompts, img/)
     └── sujuk-potatoes-illustrated/          # Style 2 example (4-palette template + prompts)

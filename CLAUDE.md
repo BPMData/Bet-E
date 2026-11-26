@@ -35,7 +35,7 @@ Only proceed to `prompts.json` and image generation after the user picks a style
 - **Inspect before building, and inspect after building:** Always view a contact sheet (`scripts/make_contact_sheet.py`) of all generated art (`hero` first as a single test shot, then `s1`–`sN`), and inspect rendered 90-DPI preview PNGs (`scripts/build.py --preview-dir ...`) for **every** exported PDF size to catch clipped captions, footer collisions, or extra pages.
 - **Never overwrite outputs:** Save finished files into `~/Documents/Personal/Recipes/` (or your chosen output directory) using incremented `-v2`, `-v3`, `-v4` suffixes (`scripts/build.py` refuses to overwrite).
 - **Pace image generation requests:** Wait **at least 0.5–1 second** after each image generation request (`hero` first, then `s1`–`sN` paced—never fire 8–9 requests simultaneously in one burst, which triggers `429` rate limits).
-- **Zero-cost native generation first:** Prefer the agent's built-in image generator (`image-generator` / Gemini subscription) when available; only fall back to `scripts/gen_images.py` (OpenRouter) if needed, and always report image costs.
+- **Never use OpenRouter from Gemini/Antigravity or Codex:** Gemini/Antigravity and Codex **must use their native built-in image generation tools only** (`image-generator` / built-in image tool) and **must NEVER call `scripts/gen_images.py` or touch the user's OpenRouter key** (not even as a fallback). **Only Claude Code** (which lacks native image generation) may use `scripts/gen_images.py` via OpenRouter, and must report the image cost.
 
 ## Where to go
 | Task | Go to |
