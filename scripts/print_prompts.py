@@ -35,12 +35,23 @@ def main() -> None:
         default="random",
         help="Variant selection when prompts.json has style_variants: random (default), mix (per-image), or 0-based index",
     )
+    ap.add_argument(
+        "--callouts",
+        action="store_true",
+        help="Opt in to playful 1950s hand-lettered comic callout labels (e.g. 'SIZZLE!', 'CHEESE PULL!')",
+    )
     ap.add_argument("names", nargs="*")
     a = ap.parse_args()
 
     cfg = json.load(open(a.prompts_json, encoding="utf-8"))
     aspect = cfg.get("aspect", {})
     names = a.names or list(cfg["prompts"])
+    callout_suffix = (
+        " Optionally include 1–2 witty, cleanly spelled 1950s hand-lettered editorial ink callouts "
+        "(such as 'SIZZLE!' or an ingredient pointer) in the margin."
+        if a.callouts
+        else ""
+    )
 
     fixed_style, fixed_name = (None, None)
     if a.style_variant != "mix":
@@ -58,7 +69,7 @@ def main() -> None:
         print(f"=== {name} ===")
         print(f"save as: img/{name}.png")
         print(f"aspect ratio: {aspect.get(name, aspect.get('default', '4:3'))}")
-        print("prompt: " + style + cfg["prompts"][name])
+        print("prompt: " + style + cfg["prompts"][name] + callout_suffix)
         print()
 
 

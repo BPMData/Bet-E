@@ -7,11 +7,13 @@ Contributions are very welcome! Ideas that fit great here:
 - **Improvements to `scripts/`** (`build.py`, `make_contact_sheet.py`, `print_prompts.py`, `gen_images.py`)
 
 ## Before Opening a Pull Request
-1. **Verify the full build:**
+1. **Always use a Pull Request — never force-push to `main`.** Create a feature branch, run the tests, and open a PR for review.
+2. **Run the CLI tests & verify the full build:**
+   - Run `python3 -m unittest discover -s tests -v`.
    - Run `python3 scripts/make_contact_sheet.py ...` on any generated imagery and inspect every image visually.
    - Run `python3 scripts/build.py ... --preview-dir ...` and verify the resulting PDF is cleanly paginated (typically 2 US Letter pages per size) with no overlapping footers or clipped text.
-2. **No copyrighted third-party assets:** Only include artwork, fonts (via open licenses), and text you created or have the right to distribute.
-3. **Keep personal paths & keys out:** Never commit API keys, personal output directories, or `cost_log.txt`.
+3. **No copyrighted third-party assets:** Only include artwork, fonts (via open licenses), and text you created or have the right to distribute.
+4. **Keep personal paths & keys out:** Never commit API keys, personal output directories, or `cost_log.txt`.
 
 ## License & CLA
 - All code, templates, and documentation in this repo are licensed under the **GNU AGPL-3.0** (see `LICENSE`).
