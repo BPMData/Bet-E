@@ -95,7 +95,18 @@ def main() -> None:
     ap.add_argument("--preview-dir", help="Directory to write 90-DPI PNG page previews")
     ap.add_argument("--alt-hash", help="Optional URL hash for alternate toggle PDF (e.g. small or big)")
     ap.add_argument("--alt-suffix", help="Filename suffix for alternate PDF (defaults to -<alt_hash>)")
-    a = ap.parse_args()
+    # Allow leading-dash suffixes like `--alt-suffix -4-potatoes` without requiring `--alt-suffix=...`.
+    argv: list[str] = []
+    raw = sys.argv[1:]
+    i = 0
+    while i < len(raw):
+        if raw[i] == "--alt-suffix" and i + 1 < len(raw):
+            argv.append(f"--alt-suffix={raw[i + 1]}")
+            i += 2
+        else:
+            argv.append(raw[i])
+            i += 1
+    a = ap.parse_args(argv)
 
     html_out = a.out_base + ".html"
     pdf_out = a.out_base + ".pdf"

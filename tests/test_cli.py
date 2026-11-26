@@ -131,10 +131,12 @@ class BetECLITests(unittest.TestCase):
             previews = os.path.join(tmp, "previews")
             r = run_script(
                 "build.py",
-                [str(tpl), img_dir, out_base, "--preview-dir", previews],
+                [str(tpl), img_dir, out_base, "--preview-dir", previews, "--alt-hash", "small", "--alt-suffix", "-4-potatoes"],
                 env={"CHROME_BIN": stub},
             )
             self.assertIn("card.pdf: 1 pages", r.stdout)
+            self.assertIn("card-4-potatoes.pdf: 1 pages", r.stdout)
+            self.assertTrue(os.path.exists(out_base + "-4-potatoes.pdf"))
             html_out = Path(out_base + ".html").read_text(encoding="utf-8")
             self.assertIn("data:image/jpeg;base64,", html_out)
             self.assertNotIn("{{hero}}", html_out)
