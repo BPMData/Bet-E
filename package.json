@@ -1,0 +1,9 @@
+{
+  "name": "bet-e",
+  "private": true,
+  "description": "Formatting tooling only; Bet-E itself is a Python project.",
+  "license": "AGPL-3.0-only",
+  "devDependencies": {
+    "prettier": "3.3.3"
+  }
+}
