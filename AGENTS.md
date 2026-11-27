@@ -25,3 +25,4 @@ Whenever a user asks to create a new vintage recipe card (even if they provide a
 
 ## Git Workflow
 - **Always use a Pull Request** for repository changes—never push or force-push directly to `main`. Run `python3 -m unittest discover -s tests -v` before opening a PR.
+- **Formatting:** run `npx prettier --write` on changed files (CI runs `npx prettier --check .`). Local blame: `git config blame.ignoreRevsFile .git-blame-ignore-revs`.
