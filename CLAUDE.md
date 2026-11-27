@@ -49,3 +49,6 @@ Only proceed to `prompts.json` and image generation after the user answers the o
 | Prompt printer, contact sheet, PDF builder & cookbook merger | `scripts/` (`print_prompts.py`, `make_contact_sheet.py`, `build.py`, `merge_cookbook.py`, `gen_images.py`) |
 | License & contributor relicensing agreement | `LICENSE` (AGPL-3.0), `CLA.md`, `CONTRIBUTING.md` |
 | Final delivered recipe cards | User-chosen folder (`Documents/Recipes`, `Desktop/Recipes`, `output/`, etc.) |
+
+## Formatting
+Run `npx prettier --write` on changed files before committing (CI runs `npx prettier --check .`).

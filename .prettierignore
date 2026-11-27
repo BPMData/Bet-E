@@ -1,0 +1,20 @@
+# Dependencies and lockfiles
+node_modules/
+package-lock.json
+
+# Build output / generated files
+dist/
+output/
+work/
+previews*/
+.venv/
+__pycache__/
+
+# Markdown and docs are not reformatted
+*.md
+
+# Prettier's default HTML whitespace handling changes how these templates render (verified by rebuilding the
+# PDFs: wrapped text in <li> differs on page 1). They are build inputs for scripts/build.py, so they stay as-is.
+# `htmlWhitespaceSensitivity: "strict"` renders pixel-identically if you ever want them formatted.
+examples/sujuk-potatoes-illustrated/template.html
+examples/sujuk-twice-baked-potatoes/template.html

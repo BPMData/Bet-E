@@ -12,3 +12,4 @@ cost_log.txt
 .env
 work/
 styles/*/refs/
+node_modules/
